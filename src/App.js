@@ -1,25 +1,25 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
- import cookies from 'js-cookie'
+import cookies from "js-cookie";
 const languages = [
   {
-    code: 'fr',
-    name: 'Français',
-    country_code: 'fr',
-  }, 
-  {
-    code: 'en',
-    name: 'English',
-    country_code: 'en',
+    code: "fr",
+    name: "Français",
+    country_code: "fr",
   },
   {
-    code: 'ar',
-    name: 'العربية',
-    country_code: 'sa',
-    dir: 'rtl'
+    code: "en",
+    name: "English",
+    country_code: "en",
   },
-]
+  {
+    code: "ar",
+    name: "العربية",
+    country_code: "sa",
+    dir: "rtl",
+  },
+];
 
 // const GlobeIcon = ({ width = 24, height = 24}) => {
 //   <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} fill="currentColor" class="bi bi-globe" viewBox="0 0 16 16">
@@ -28,45 +28,57 @@ const languages = [
 // }
 
 function App() {
-  const currentLanguageCode = cookies.get('i18next') || 'en'
-  const currentLanguage = languages.find(l => l.code === currentLanguageCode)
-const { t } = useTranslation()
-const releaseDate = new Date('2021-03-07')
-const timeDifference = new Date() - releaseDate
-const number_of_days = Math.floor(timeDifference / (1000 * 60 * 60 *24))
+  const currentLanguageCode = cookies.get("i18next") || "en";
+  const currentLanguage = languages.find((l) => l.code === currentLanguageCode);
+  const { t } = useTranslation();
+  const releaseDate = new Date("2021-03-07");
+  const timeDifference = new Date() - releaseDate;
+  const number_of_days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
-useEffect(() => {
-document.body.dir = currentLanguage.dir || 'ltr'
-document.title = t('app_title')
-}, [currentLanguage, t])
+  useEffect(() => {
+    document.body.dir = currentLanguage.dir || "ltr";
+    document.title = t("app_title");
+  }, [currentLanguage, t]);
 
   return (
     <div className="container">
       <div className="d-flex justify-content-end">
-      <div className="dropdown">
-  <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-  Dropdown button
-    <i class="bi bi-globe"></i>
-  </button>
-  <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    <li><span className="dropdown-item-text">{t('language')}</span></li>
-    {languages.map(({ code, name, country_code}) => (
-    <li key={country_code}>
-      <button className="dropdown-item" onClick={() => i18next.changeLanguage(code)}
-      disabled={code == currentLanguageCode}>
-        <span className={`flag-icon flag-icon-${country_code} mx-2`}
-        style={{ opacity: code ===currentLanguageCode ? 0.9 : 1}}
-        ></span>
-        {name}</button>
-        </li>
-    ))}
-    
-  </ul>
-</div>
+        <div className="dropdown">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Dropdown button
+            <i class="bi bi-globe"></i>
+          </button>
+          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li>
+              <span className="dropdown-item-text">{t("language")}</span>
+            </li>
+            {languages.map(({ code, name, country_code }) => (
+              <li key={country_code}>
+                <button
+                  className="dropdown-item"
+                  onClick={() => i18next.changeLanguage(code)}
+                  disabled={code === currentLanguageCode}
+                >
+                  <span
+                    className={`flag-icon flag-icon-${country_code} mx-2`}
+                    style={{ opacity: code === currentLanguageCode ? 0.9 : 1 }}
+                  ></span>
+                  {name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
       <div className="d-flex flex-column align-items-start">
-     <h1 className="font-weight-normal mb-3">{t('welcome_message')}</h1>
-     <p>{t('days_since_release', {number_of_days})}</p>
+        <h1 className="font-weight-normal mb-3">{t("welcome_message")}</h1>
+        <p>{t("days_since_release", { number_of_days })}</p>
       </div>
     </div>
   );
